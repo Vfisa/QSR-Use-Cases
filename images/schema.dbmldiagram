@@ -1,0 +1,66 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table location_review {
+    review_id varchar [primary key]
+    id varchar
+    place_name varchar
+    place_id varchar
+    author varchar
+    rating float
+    review_date datetime
+    sentiment varchar
+    }
+    
+    Table location {
+      place_id varchar [primary key]
+      place_name varchar
+      place_url varchar
+      website varchar
+      formatted_address varchar
+      street varchar
+      city varchar
+      state varchar
+      country varchar
+      zipcode varchar
+      price_level varchar
+      reservable varchar
+      takeout varchar
+      dine_in varchar
+      serves_lunch varchar
+      serves_dinner varchar
+      serves_beer varchar
+      serves_wine varchar
+      serves_brunch varchar
+      serves_vegetarian_food varchar
+      opening_hours varchar
+      dine_brands varchar
+    }
+    
+    Table review_sentence {
+      review_id varchar [primary key]
+      sentence_id varchar [primary key]
+      sentence_text varchar
+      sentence_sentiment varchar
+      sentence_category varchar
+      sentence_category_group varchar
+      sentence_topic varchar
+      entities varchar
+    }
+    
+    Table review_entity {
+      review_id varchar
+      sentence_id varchar [primary key]
+      sentence_category varchar
+      sentence_category_group varchar
+      sentence_topic varchar
+      sentence_sentiment varchar
+      entity varchar [primary key]
+    }
+    
+    //Ref: posts.user_id > users.id // many-to-one
+    
+    Ref: location.place_id < location_review.place_id
+    Ref: location_review.review_id < review_sentence.review_id
+    Ref: review_sentence.sentence_id < review_entity.sentence_id
+    
